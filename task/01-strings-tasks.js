@@ -214,7 +214,7 @@ function getRectangleString(width, height) {
                 result = result + (`-└${sideLine.repeat(width-2)}┘`+'\n');
             } else {
                 const innerLine = " ";
-                result = result + (`-│${innerLine.repeat(width-2)}│'+`+'\n');
+                result = result + (`-│${innerLine.repeat(width-2)}│`+'\n');
             } 
           }
     return result;
