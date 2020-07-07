@@ -209,12 +209,12 @@ function getRectangleString(width, height) {
   
         for (let i = 1; i <= height; i++) {
         if (i == 1) {
-            result = result + (`'┌${sideLine.repeat(width-2)}┐\\n'+`+'\n');
+            result = result + (`-┌${sideLine.repeat(width-2)}┐`+'\n');
             } else if (i == height) {
-                result = result + (`'└${sideLine.repeat(width-2)}┘\\n'`+'\n');
+                result = result + (`-└${sideLine.repeat(width-2)}┘`+'\n');
             } else {
                 const innerLine = " ";
-                result = result + (`'│${innerLine.repeat(width-2)}│\\n'+`+'\n');
+                result = result + (`-│${innerLine.repeat(width-2)}│'+`+'\n');
             } 
           }
     return result;
