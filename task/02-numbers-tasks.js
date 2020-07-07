@@ -38,7 +38,7 @@ function getRectangleArea(width, height) {
  *   0    => 0
  */
 function getCicleCircumference(radius) {
-    return 2*radius*3.1415;
+    return 2*radius*Math.PI;
 }
 
 /**
@@ -54,7 +54,14 @@ function getCicleCircumference(radius) {
  *  -3, 3  => 0
  */
 function getAverage(value1, value2) {
-    return (value1+value2)/2;
+   let avgNum = (value1+value2)/2;
+   if (avgNum >= Number.MAX_VALUE) {
+       return Number.MAX_VALUE;
+   } else if (avgNum <= Number.MIN_VALUE) {
+       return Number.MIN_VALUE;
+   } else {
+       return avgNum;
+   }
 }
 
 /**
