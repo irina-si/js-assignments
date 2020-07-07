@@ -205,18 +205,20 @@ function extractEmails(str) {
 function getRectangleString(width, height) {
 
     const sideLine = "─";
+    let result = "";
   
         for (let i = 1; i <= height; i++) {
         if (i == 1) {
-            console.log(`'┌${sideLine.repeat(width-2)}┐\\n'+`+'\n');
+            result = result + (`'┌${sideLine.repeat(width-2)}┐\\n'+`+'\n');
             } else if (i == height) {
-                console.log(`'└${sideLine.repeat(width-2)}┘\\n'`+'\n');
+                result = result + (`'└${sideLine.repeat(width-2)}┘\\n'`+'\n');
             } else {
                 const innerLine = " ";
-                console.log(`'│${innerLine.repeat(width-2)}│\\n'+`+'\n');
+                result = result + (`'│${innerLine.repeat(width-2)}│\\n'+`+'\n');
             } 
           }
-      }
+    return result;
+    }
 
 
 /**
