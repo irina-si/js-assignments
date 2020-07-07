@@ -56,7 +56,7 @@ function getStringLength(value) {
  *   'Chuck','Norris'  => 'Hello, Chuck Norris!'
  */
 function getStringFromTemplate(firstName, lastName) {
-    return `Hello, ${firstName} ${lastName}`;
+    return `Hello, ${firstName} ${lastName}!`;
 }
 
 /**
@@ -132,7 +132,7 @@ function repeatString(value, count) {
  */
 function removeFirstOccurrences(str, value) {
     const valueIndex = str.indexOf(value, 0);
-    return str.slice(0, valueIndex)+str.slice(valueIndex+value.length).trim();
+    return str.slice(0, valueIndex)+str.slice(valueIndex+value.length);
 }
 
 /**
@@ -206,7 +206,7 @@ function getRectangleString(width, height) {
 
     const sideLine = "─";
   
-        for (i = 1; i <= height; i++) {
+        for (let i = 1; i <= height; i++) {
         if (i == 1) {
             console.log(`'┌${sideLine.repeat(width-2)}┐\\n'+`+'\n');
             } else if (i == height) {
