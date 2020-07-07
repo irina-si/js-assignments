@@ -58,7 +58,7 @@ function getAverage(value1, value2) {
    if (avgNum >= Number.MAX_VALUE) {
        return Number.MAX_VALUE;
    } else if (avgNum <= Number.MIN_VALUE) {
-       return Number.MIN_VALUE;
+       return 0;
    } else {
        return avgNum;
    }
