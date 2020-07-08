@@ -93,7 +93,7 @@ function timeSpanToString(startDate, endDate) {
    let milliseconds = parseInt(timestamp % 1000);
    let seconds = parseInt((timestamp / 1000) % 60);
    let minutes = parseInt((timestamp / (1000 * 60)) % 60);
-   let hours = parseInt((timestamp / (1000 * 60 * 60)) % 24);
+   let hours = parseInt((timestamp / (1000 * 60 * 60)));
     
    hours = (hours < 10) ? "0" + hours : hours;
    minutes = (minutes < 10) ? "0" + minutes : minutes;
@@ -123,9 +123,9 @@ function angleBetweenClockHands(date) {
    let dateObj = new Date(date);
    let oneHourAngle = 30;
    let oneMinAngle = 6;
-   let allHours = dateObj.getHours() + (dateObj.getMinutes()/60).toFixed(3);
+   let allHours = dateObj.getUTCHours() + (dateObj.getUTCMinutes()/60);
    let hourAngle = oneHourAngle * allHours;
-   let minuteAngle = oneMinAngle * dateObj.getMinutes();
+   let minuteAngle = oneMinAngle * dateObj.getUTCMinutes();
    let angle = Math.abs(hourAngle - minuteAngle);
    return angle/180*Math.PI;
 }
