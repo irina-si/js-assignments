@@ -124,6 +124,9 @@ function angleBetweenClockHands(date) {
    let oneHourAngle = 30;
    let oneMinAngle = 6;
    let allHours = dateObj.getUTCHours() + (dateObj.getUTCMinutes()/60);
+   if (allHours > 12) {
+      allHours = allHours - 12;
+   }
    let hourAngle = oneHourAngle * allHours;
    let minuteAngle = oneMinAngle * dateObj.getUTCMinutes();
    let angle = Math.abs(hourAngle - minuteAngle);
