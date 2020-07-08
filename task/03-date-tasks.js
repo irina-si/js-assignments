@@ -85,12 +85,25 @@ function isLeapYear(date) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
 function timeSpanToString(startDate, endDate) {
-   let startDateObj = new Date(startDate);
-   let endDateObj = new Date(endDate);
-   let timestamp = endDateObj.getTime()-startDateObj.getTime();
-   let dateDif = new Date(timestamp);
-   let dateDifStr = dateDif.toISOString();
-   return dateDifStr.substring(11, 23);
+   const startDate1 = new Date(startDate);
+   const endDate1 = new Date(endDate);
+
+   let timestamp = endDate1.getTime()-startDate1.getTime();
+
+   let milliseconds = parseInt(timestamp % 1000);
+   let seconds = parseInt((timestamp / 1000) % 60);
+   let minutes = parseInt((timestamp / (1000 * 60)) % 60);
+   let hours = parseInt((timestamp / (1000 * 60 * 60)) % 24);
+    
+   hours = (hours < 10) ? "0" + hours : hours;
+   minutes = (minutes < 10) ? "0" + minutes : minutes;
+   seconds = (seconds < 10) ? "0" + seconds : seconds;
+   console.log(milliseconds);
+   milliseconds = (milliseconds < 10) ? "00" + milliseconds
+      : (milliseconds < 100) ? "0" + milliseconds
+      : milliseconds;
+
+   return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
 }
 
 /**
@@ -110,10 +123,10 @@ function angleBetweenClockHands(date) {
    let dateObj = new Date(date);
    let oneHourAngle = 30;
    let oneMinAngle = 6;
-   allHours = dateObj.getHours() + (dateObj.getMinutes()/60).toFixed(3);
-   hourAngle = oneHourAngle * allHours;
-   minuteAngle = oneMinAngle * dateObj.getMinutes();
-   angle = Math.abs(hourAngle - minuteAngle);
+   let allHours = dateObj.getHours() + (dateObj.getMinutes()/60).toFixed(3);
+   let hourAngle = oneHourAngle * allHours;
+   let minuteAngle = oneMinAngle * dateObj.getMinutes();
+   let angle = Math.abs(hourAngle - minuteAngle);
    return angle/180*Math.PI;
 }
 
