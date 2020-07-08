@@ -85,26 +85,13 @@ function isLeapYear(date) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
 function timeSpanToString(startDate, endDate) {
-   let startDate1 = new Date(startDate);
-   console.log(`start date: ${startDate1} `)
-   let endDate1 = new Date(endDate);
-   console.log(`end date: ${endDate}`);
-   let timestamp = endDate1.getTime()-startDate1.getTime();
-   console.log(`timestamp-dif: ${timestamp}`);
-    
-   var milliseconds = parseInt((timestamp % 1000) / 100),
-            seconds = parseInt((timestamp / 1000) % 60),
-            minutes = parseInt((timestamp / (1000 * 60)) % 60),
-              hours = parseInt((timestamp / (1000 * 60 * 60)) % 24);
-    
-   hours = (hours < 10) ? "0" + hours : hours;
-   minutes = (minutes < 10) ? "0" + minutes : minutes;
-   seconds = (seconds < 10) ? "0" + seconds : seconds;
-    
-      return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+   let startDateObj = new Date(startDate);
+   let endDateObj = new Date(endDate);
+   let timestamp = endDateObj.getTime()-startDateObj.getTime();
+   let dateDif = new Date(timestamp);
+   let dateDifStr = dateDif.toISOString();
+   return dateDifStr.substring(11, 23);
 }
-
-
 
 /**
  * Returns the angle (in radians) between the hands of an analog clock for the specified Greenwich time.
@@ -119,14 +106,13 @@ function timeSpanToString(startDate, endDate) {
  *    Date.UTC(2016,3,5,18, 0) => Math.PI
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
-function angleBetweenClockHands(date1) {
-   let date = new Date(date);
-   console.log(date);
+function angleBetweenClockHands(date) {
+   let dateObj = new Date(date);
    let oneHourAngle = 30;
    let oneMinAngle = 6;
-   allHours = date.getHours() + (date.getMinutes()/60).toFixed(3);
+   allHours = dateObj.getHours() + (dateObj.getMinutes()/60).toFixed(3);
    hourAngle = oneHourAngle * allHours;
-   minuteAngle = oneMinAngle * date.getMinutes();
+   minuteAngle = oneMinAngle * dateObj.getMinutes();
    angle = Math.abs(hourAngle - minuteAngle);
    return angle/180*Math.PI;
 }
