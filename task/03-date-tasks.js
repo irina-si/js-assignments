@@ -130,7 +130,12 @@ function angleBetweenClockHands(date) {
    let hourAngle = oneHourAngle * allHours;
    let minuteAngle = oneMinAngle * dateObj.getUTCMinutes();
    let angle = Math.abs(hourAngle - minuteAngle);
-   return angle/180*Math.PI;
+
+   let radians = angle/180*Math.PI;
+   if (radians > Math.PI) {
+      radians = radians - Math.PI
+   }
+   return radians;
 }
 
 
