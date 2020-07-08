@@ -22,7 +22,7 @@
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
 function parseDataFromRfc2822(value) {
-   throw new Error('Not implemented');
+   return new Date( Date.parse(value) );
 }
 
 /**
@@ -37,7 +37,7 @@ function parseDataFromRfc2822(value) {
  *    '2016-01-19T08:07:37Z' => Date()
  */
 function parseDataFromIso8601(value) {
-   throw new Error('Not implemented');
+   return new Date( Date.parse(value) ) ;
 }
 
 
@@ -56,7 +56,16 @@ function parseDataFromIso8601(value) {
  *    Date(2015,1,1)    => false
  */
 function isLeapYear(date) {
-   throw new Error('Not implemented');
+   let year = new Date(date).getFullYear();
+   if (year % 400 === 0) {
+      return true;
+   } else if (year % 100 === 0) {
+      return false;
+   } else if (year % 4 === 0) {
+      return true;
+   } else {
+      return false;
+   }
 }
 
 
@@ -76,8 +85,25 @@ function isLeapYear(date) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
 function timeSpanToString(startDate, endDate) {
-   throw new Error('Not implemented');
+   let startDate1 = new Date(startDate);
+   console.log(`start date: ${startDate1} `)
+   let endDate1 = new Date(endDate);
+   console.log(`end date: ${endDate}`);
+   let timestamp = endDate1.getTime()-startDate1.getTime();
+   console.log(`timestamp-dif: ${timestamp}`);
+    
+   var milliseconds = parseInt((timestamp % 1000) / 100),
+            seconds = parseInt((timestamp / 1000) % 60),
+            minutes = parseInt((timestamp / (1000 * 60)) % 60),
+              hours = parseInt((timestamp / (1000 * 60 * 60)) % 24);
+    
+   hours = (hours < 10) ? "0" + hours : hours;
+   minutes = (minutes < 10) ? "0" + minutes : minutes;
+   seconds = (seconds < 10) ? "0" + seconds : seconds;
+    
+      return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
 }
+
 
 
 /**
@@ -93,8 +119,16 @@ function timeSpanToString(startDate, endDate) {
  *    Date.UTC(2016,3,5,18, 0) => Math.PI
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
-function angleBetweenClockHands(date) {
-    throw new Error('Not implemented');
+function angleBetweenClockHands(date1) {
+   let date = new Date(date);
+   console.log(date);
+   let oneHourAngle = 30;
+   let oneMinAngle = 6;
+   allHours = date.getHours() + (date.getMinutes()/60).toFixed(3);
+   hourAngle = oneHourAngle * allHours;
+   minuteAngle = oneMinAngle * date.getMinutes();
+   angle = Math.abs(hourAngle - minuteAngle);
+   return angle/180*Math.PI;
 }
 
 
