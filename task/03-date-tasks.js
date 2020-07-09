@@ -98,7 +98,6 @@ function timeSpanToString(startDate, endDate) {
    hours = (hours < 10) ? "0" + hours : hours;
    minutes = (minutes < 10) ? "0" + minutes : minutes;
    seconds = (seconds < 10) ? "0" + seconds : seconds;
-   console.log(milliseconds);
    milliseconds = (milliseconds < 10) ? "00" + milliseconds
       : (milliseconds < 100) ? "0" + milliseconds
       : milliseconds;
@@ -121,17 +120,21 @@ function timeSpanToString(startDate, endDate) {
  */
 function angleBetweenClockHands(date) {
    let dateObj = new Date(date);
-   let oneHourAngle = 30;
-   let oneMinAngle = 6;
-   let allHours = dateObj.getUTCHours() + (dateObj.getUTCMinutes()/60);
-   if (allHours > 12) {
-      allHours = allHours - 12;
-   }
-   let hourAngle = oneHourAngle * allHours;
-   let minuteAngle = oneMinAngle * dateObj.getUTCMinutes();
-   let angle = Math.abs(hourAngle - minuteAngle);
+   const oneHourAngle = 30;
+   const oneMinAngle = 6;
+   let allHours = 0;
 
-   let radians = angle/180*Math.PI;
+   if (dateObj.getUTCHours() > 12) {
+      allHours = (dateObj.getUTCHours() - 12) + dateObj.getUTCMinutes()/60;;
+   } else {
+      allHours = dateObj.getUTCHours() + dateObj.getUTCMinutes()/60
+      }
+      
+   const hourAngle = oneHourAngle * allHours;
+   const minuteAngle = oneMinAngle * dateObj.getUTCMinutes();
+   const angle = Math.abs(hourAngle - minuteAngle);
+
+   const radians = angle/180*Math.PI;
    if (radians > Math.PI) {
       radians = radians - Math.PI
    }
