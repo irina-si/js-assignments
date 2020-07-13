@@ -27,7 +27,7 @@ function findElement(arr, value) {
 }
 
 /**
- * Generates an    array of odd numbers of the specified length
+ * Generates an array of odd numbers of the specified length.
  * 
  * @param {number} len
  * @return {array}
@@ -38,13 +38,13 @@ function findElement(arr, value) {
  *    5 => [ 1, 3, 5, 7, 9 ]
  */
 function generateOdds(len) {
-   let arr = new Array(len);
-   arr[0] = 1;
-   arr.forEach((item, index) => {
-      arr[index+1] = item + 2;
-   })
-   arr.pop();
-   return arr;
+   let arr = new Array(len).fill(0);
+   let previousNumber = 1;
+   return arr.map((item) => {
+           item = previousNumber;
+           previousNumber += 2;
+           return item;
+       })
 }
 
 
@@ -60,9 +60,8 @@ function generateOdds(len) {
  *    [] => [] 
  */
 function doubleArray(arr) {
-   const stringFromArr = arr.join(",");
-   const doubleString = stringFromArr + "," + stringFromArr;
-   return doubleString.split(",");
+   arr.push(...arr);
+   return arr;
 }
 
 
@@ -609,18 +608,19 @@ function distinct(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(array, keySelector, valueSelector) {
-   let newArr = new Map();
-   const countries = [...new Set(array.map(keySelector))];
-   countries.forEach((country) => {
-      newArr.set(country, array
-            .filter((obj) => obj.country === country)
-            .map(valueSelector)
-      )
-   });
-   return newArr;
-}
    
+function group(array, keySelector, valueSelector) {
+   let map = new Map(),
+       count = array.length;
+   for (let key, i = 0; i < count; ++i) {
+       key = keySelector(array[i]);
+       if (map.has(key))
+           map.get(key).push(valueSelector(array[i]));
+       else
+           map.set(key, [valueSelector(array[i])]);
+   }
+   return map;
+}
 
 /**
  * Projects each element of the specified array to a sequence and flattens the resulting sequences into one array.
@@ -636,7 +636,8 @@ function group(array, keySelector, valueSelector) {
 function selectMany(arr, childrenSelector) {
    return arr.reduce((oneArray, item) => {
       childrenSelector(item);
-      return oneArray.push(...item);
+      oneArray.push(...item);
+      return oneArray;
     }, []);
 }
 
