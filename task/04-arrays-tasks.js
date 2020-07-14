@@ -66,7 +66,7 @@ function doubleArray(arr) {
 
 
 /**
- * Returns an    array of positive numbers from the specified    array in original order
+ * Returns an array of positive numbers from the specified array in original order
  * 
  * @param {array} arr
  * @return {array}
@@ -77,12 +77,12 @@ function doubleArray(arr) {
  *    [] => [] 
  */
 function getArrayOfPositives(arr) {
-   let positivesArr = [];
-   arr.forEach((number) => {
+   let positivesArr = arr.reduce( (newArr,number) => { 
       if (number > 0) {
-         positivesArr.push(number);
-      }
-   });
+         newArr.push(number);
+         }
+         return newArr;
+   }, []);
    return positivesArr;
 }
 
@@ -287,7 +287,7 @@ function getSecondItems(arr) {
 
 /**
  * Propagates every item in sequence its position times
- * Returns an    array that consists of: one first item, two second items, tree third items etc. 
+ * Returns an  array that consists of: one first item, two second items, tree third items etc. 
  * 
  * @param {array} arr 
  * @return {array}
@@ -300,18 +300,17 @@ function getSecondItems(arr) {
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
 function propagateItemsByPositionIndex(arr) {
-    let propItemsArr = [];
-    
-       arr.forEach((item, index) => {  
-            let newItem = new Array(index+1);
+    let propItemsArr = arr.reduce( (newArr, item, index) => {  
+            let newItem = new Array(index+1).fill(0);
             newItem[0] = item;
-            newItem.forEach((propItem, i, array) => {
+            let oneNumArr = newItem.map((propItem, i, array) => {
                if (i !== array.length-1) {
                      array[i+1] = propItem;
                }
             });
-            propItemsArr.push(...newItem);
-         });  
+            newArr.push(...newItem);
+            return newArr;
+         }, []);  
      return propItemsArr;      
    }
 
@@ -385,7 +384,7 @@ function sortDigitNamesByNumericOrder(arr) {
 }
 
 /** 
- * Returns the sum of all items in the specified    array of numbers
+ * Returns the sum of all items in the specified array of numbers
  * 
  * @param {array} arr
  * @return {number}
@@ -398,12 +397,12 @@ function sortDigitNamesByNumericOrder(arr) {
  */
 function getItemsSum(arr) {
    let sum = 0;
-   arr.forEach(item => sum+=item);
+   arr.map(item => sum+=item);
    return sum;
 }
  
 /** 
- * Returns the number of all falsy value in the specified    array
+ * Returns the number of all falsy value in the specified array
  * 
  * @param {array} arr
  * @return {array}
@@ -416,14 +415,14 @@ function getItemsSum(arr) {
  */
 function getFalsyValuesCount(arr) {
    let numOfFalsyValues = 0;
-   arr.forEach(item => {if (!!item == false) {
+   arr.map(item => {if (!!item == false) {
       numOfFalsyValues += 1;
    }});
    return numOfFalsyValues;
 }
 
 /**
- * Returns a number of all occurences of the specified item in an    array  
+ * Returns a number of all occurences of the specified item in an array  
  * 
  * @param {array} arr
  * @param {any} item 
@@ -438,7 +437,7 @@ function getFalsyValuesCount(arr) {
  */
 function findAllOccurences(arr, item) {
    let numOfOccurences = 0;
-   arr.forEach(element => {
+   arr.map(element => {
       if (element === item) {
       numOfOccurences += 1;
       }
@@ -506,7 +505,7 @@ function sortCitiesArray(arr) {
  * Creates an indentity matrix of the specified size
  * 
  * @param {number} n
- * @return {   array}
+ * @return {array}
  * 
  * @example
  *     1  => [[1]]
@@ -521,20 +520,16 @@ function sortCitiesArray(arr) {
  *           [0,0,0,0,1]]   
  */
 function getIdentityMatrix(n) {
-   const arr = new Array(n);
-
-   arr[0] = new Array(n);
-   arr.forEach( function(array, index, arr) {
-     if (index !== n-1) {
-       arr[index + 1] = [...array];
-     }
-   })
-
-   arr.forEach((array, index) => {
-      array.fill(0);
-      array[index] = 1;
-   })
-   return arr;
+   const arr = new Array(n).fill(0);
+   let rowsArr = arr.map((item) => {
+      item = new Array(n).fill(0);
+      return item;
+    }
+   )
+  return rowsArr.map((array, index) => {
+            array[index] = 1;
+            return array
+         })
 }
 
 
@@ -555,12 +550,11 @@ function getIntervalArray(start, end) {
    let array = (new Array(end - start + 1)).fill(0);
    let currValue = start;
 
-   array.forEach((item, index, self) => {
-         self[index] = currValue;
+   return array.map((item) => {
+         item = currValue;
          currValue++;
+         return item;
    });
-
-   return array;
 }
 
 /**
@@ -610,15 +604,15 @@ function distinct(arr) {
  */
    
 function group(array, keySelector, valueSelector) {
-   let map = new Map(),
-       count = array.length;
-   for (let key, i = 0; i < count; ++i) {
-       key = keySelector(array[i]);
-       if (map.has(key))
-           map.get(key).push(valueSelector(array[i]));
-       else
-           map.set(key, [valueSelector(array[i])]);
+   let map = new Map();
+   array.map((obj, i) => {
+      let key = keySelector(array[i]);
+      if (map.has(key))
+         map.get(key).push(valueSelector(array[i]));
+      else
+         map.set(key, [valueSelector(array[i])]);
    }
+)
    return map;
 }
 
@@ -656,7 +650,7 @@ function selectMany(arr, childrenSelector) {
  */
 function getElementByIndexes(arr, indexes) {
    let currentValue;
-   indexes.forEach((index, i) => {
+   indexes.map((index, i) => {
       if (i === 0) {
          currentValue = arr[index];
       } else {
