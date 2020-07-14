@@ -629,8 +629,8 @@ function group(array, keySelector, valueSelector) {
  */
 function selectMany(arr, childrenSelector) {
    return arr.reduce((oneArray, item) => {
-      childrenSelector(item);
-      oneArray.push(...item);
+      let newArr = childrenSelector(item);
+      oneArray.push(...newArr);
       return oneArray;
     }, []);
 }
